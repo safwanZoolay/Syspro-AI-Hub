@@ -7,12 +7,14 @@ import { DynamicForm } from '@/components/form/DynamicForm';
 import { ExecutionMonitor } from '@/components/execution/ExecutionMonitor';
 import { ResultsViewer } from '@/components/results/ResultsViewer';
 import { CommandInput } from '@/components/ui/CommandInput';
+import { LoginPage } from '@/components/auth/LoginPage';
 import { agents } from '@/config/agents';
 import { useAppStore } from '@/store/app-store';
 import { Agent, ExecutionRun, ExecutionStatus } from '@/types/agent';
 
 export default function Home() {
   const {
+    isAuthenticated,
     selectedAgent,
     setSelectedAgent,
     viewState,
@@ -22,6 +24,11 @@ export default function Home() {
     addExecution,
     updateExecution,
   } = useAppStore();
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   const handleAgentSelect = useCallback(
     (agent: Agent) => {

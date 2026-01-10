@@ -2,6 +2,10 @@ import { create } from 'zustand';
 import { Agent, ExecutionRun, AppState } from '@/types/agent';
 
 export const useAppStore = create<AppState>((set) => ({
+  // Authentication
+  isAuthenticated: false,
+  setIsAuthenticated: (authenticated: boolean) => set({ isAuthenticated: authenticated }),
+
   // Selected agent
   selectedAgent: null,
   setSelectedAgent: (agent: Agent | null) =>

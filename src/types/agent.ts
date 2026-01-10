@@ -79,6 +79,10 @@ export interface OutputFile {
 }
 
 export interface AppState {
+  // Authentication
+  isAuthenticated: boolean;
+  setIsAuthenticated: (authenticated: boolean) => void;
+
   // Selected agent
   selectedAgent: Agent | null;
   setSelectedAgent: (agent: Agent | null) => void;
