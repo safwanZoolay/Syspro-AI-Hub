@@ -223,15 +223,13 @@ export default function Home() {
               />
 
               <motion.p
-                className="text-foreground-secondary text-center max-w-md"
+                className="text-foreground-secondary text-center max-w-md mt-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                Select an agent to begin, or describe what you need
+                Select an agent to begin
               </motion.p>
-
-              <CommandInput agents={agents} onAgentSelect={handleAgentSelect} />
             </motion.div>
           )}
 
@@ -292,15 +290,27 @@ export default function Home() {
         </AnimatePresence>
       </main>
 
+      {/* Command Input - Fixed at bottom */}
+      {viewState === 'orbit' && (
+        <motion.div
+          className="absolute bottom-20 left-0 right-0 px-6 z-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <CommandInput agents={agents} onAgentSelect={handleAgentSelect} />
+        </motion.div>
+      )}
+
       {/* Footer */}
       <motion.footer
-        className="absolute bottom-0 left-0 right-0 p-6 flex items-center justify-center z-10"
+        className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-center z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
         <p className="text-xs text-foreground-muted">
-          Powered by Claude Code Agents & n8n Workflows
+          Powered by Saf
         </p>
       </motion.footer>
     </div>
