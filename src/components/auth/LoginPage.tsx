@@ -103,10 +103,10 @@ export function LoginPage() {
           transition={{ delay: 0.2 }}
         >
           <motion.div
-            className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-4"
+            className="inline-flex items-center justify-center px-6 py-4 rounded-2xl mb-4"
             style={{
-              background: 'linear-gradient(135deg, rgba(0, 144, 181, 0.2), rgba(164, 255, 255, 0.1))',
-              border: '1px solid rgba(0, 144, 181, 0.4)',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
+              border: '1px solid rgba(0, 144, 181, 0.3)',
               boxShadow: '0 0 40px rgba(0, 144, 181, 0.2)',
             }}
             animate={{
@@ -118,9 +118,13 @@ export function LoginPage() {
             }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            <span className="text-primary font-bold text-3xl">S</span>
+            <img
+              src="/syspro-logo.svg"
+              alt="SYSPRO"
+              className="h-10 w-auto"
+            />
           </motion.div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">SYSPRO AI Hub</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-2">AI Hub</h1>
           <p className="text-foreground-muted text-sm">Agent Orchestration Platform</p>
         </motion.div>
 

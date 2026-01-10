@@ -193,12 +193,15 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center">
-            <span className="text-primary font-bold text-lg">S</span>
-          </div>
+          <img
+            src="/syspro-logo.svg"
+            alt="SYSPRO"
+            className="h-8 w-auto"
+          />
+          <div className="h-6 w-px bg-border" />
           <div>
-            <h1 className="text-lg font-semibold text-foreground">SYSPRO AI Hub</h1>
-            <p className="text-xs text-foreground-muted">Agent Orchestration Platform</p>
+            <p className="text-sm font-medium text-foreground">AI Hub</p>
+            <p className="text-xs text-foreground-muted">Agent Orchestration</p>
           </div>
         </div>
 
