@@ -157,11 +157,7 @@ export function Orb({ status = 'idle', size = 160, onClick }: OrbProps) {
           }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          {selectedAgent
-            ? selectedAgent.shortName
-            : status === 'idle'
-              ? 'Select an agent to begin'
-              : status.toUpperCase()}
+          {selectedAgent ? selectedAgent.shortName : 'READY'}
         </motion.span>
       </div>
 
