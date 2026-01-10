@@ -25,11 +25,6 @@ export default function Home() {
     updateExecution,
   } = useAppStore();
 
-  // Show login page if not authenticated
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
-
   const handleAgentSelect = useCallback(
     (agent: Agent) => {
       setSelectedAgent(agent);
@@ -117,6 +112,11 @@ export default function Home() {
     setViewState('form');
     setCurrentExecution(null);
   }, [setViewState, setCurrentExecution]);
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-animated">
