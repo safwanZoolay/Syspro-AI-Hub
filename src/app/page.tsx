@@ -221,15 +221,6 @@ export default function Home() {
                 onAgentSelect={handleAgentSelect}
                 orbitRadius={200}
               />
-
-              <motion.p
-                className="text-foreground-secondary text-center max-w-md mt-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                Select an agent to begin
-              </motion.p>
             </motion.div>
           )}
 
@@ -310,7 +301,7 @@ export default function Home() {
         transition={{ delay: 0.5 }}
       >
         <p className="text-xs text-foreground-muted">
-          Powered by Saf
+          Powered by Safwan Zoolay
         </p>
       </motion.footer>
     </div>

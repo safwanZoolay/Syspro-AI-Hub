@@ -149,15 +149,19 @@ export function Orb({ status = 'idle', size = 160, onClick }: OrbProps) {
       )}
 
       {/* Center text/icon area */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
         <motion.span
-          className="text-xs font-medium text-white/80 text-center px-2"
+          className="text-[10px] font-medium text-white/90 text-center px-4 leading-tight"
           animate={{
-            opacity: isOrbHovered || selectedAgent ? [0.8, 1, 0.8] : 0.6,
+            opacity: isOrbHovered || selectedAgent ? [0.9, 1, 0.9] : 0.7,
           }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          {selectedAgent ? selectedAgent.shortName : status === 'idle' ? 'READY' : status.toUpperCase()}
+          {selectedAgent
+            ? selectedAgent.shortName
+            : status === 'idle'
+              ? 'Select an agent to begin'
+              : status.toUpperCase()}
         </motion.span>
       </div>
 

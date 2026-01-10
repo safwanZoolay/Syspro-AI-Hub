@@ -112,10 +112,10 @@ export function CommandInput({
       <AnimatePresence>
         {isFocused && suggestions.length > 0 && (
           <motion.div
-            className="absolute top-full left-0 right-0 mt-2 bg-background-surface border border-border rounded-xl shadow-xl overflow-hidden z-50"
-            initial={{ opacity: 0, y: -10 }}
+            className="absolute bottom-full left-0 right-0 mb-2 bg-background-surface border border-border rounded-xl shadow-xl overflow-hidden z-50"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: 10 }}
           >
             {suggestions.map((agent, index) => {
               const IconComponent = getIcon(agent.icon);
@@ -158,10 +158,10 @@ export function CommandInput({
       <AnimatePresence>
         {isFocused && !commandInput && (
           <motion.div
-            className="absolute top-full left-0 right-0 mt-2 bg-background-surface border border-border rounded-xl shadow-xl p-4 z-50"
-            initial={{ opacity: 0, y: -10 }}
+            className="absolute bottom-full left-0 right-0 mb-2 bg-background-surface border border-border rounded-xl shadow-xl p-4 z-50"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: 10 }}
           >
             <p className="text-xs text-foreground-muted mb-3">Quick actions</p>
             <div className="flex flex-wrap gap-2">
