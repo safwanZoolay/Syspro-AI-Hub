@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+:root {
+  /* SYSPRO Brand Colors */
+  --syspro-bondi: #0090B5;
+  --syspro-anakiwa: #A4FFFF;
+  --syspro-resolution: #001A71;
+
+  /* Dark Theme (Default) */
+  --background: #0A0E17;
+  --background-surface: #111827;
+  --background-elevated: #1F2937;
+
+  --foreground: #F9FAFB;
+  --foreground-secondary: #9CA3AF;
+  --foreground-muted: #6B7280;
+
+  --border: #1F2937;
+  --border-hover: #374151;
+
+  --primary: #0090B5;
+  --primary-hover: #00A8D4;
+  --primary-glow: rgba(0, 144, 181, 0.4);
+
+  --secondary: #001A71;
+  --secondary-hover: #002A91;
+
+  --accent: #A4FFFF;
+  --accent-glow: rgba(164, 255, 255, 0.3);
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+
+  /* Orb specific */
+  --orb-core: #0090B5;
+  --orb-glow: rgba(0, 144, 181, 0.6);
+  --orb-pulse: rgba(164, 255, 255, 0.4);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-surface: var(--background-surface);
+  --color-background-elevated: var(--background-elevated);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-glow: var(--primary-glow);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --color-orb-core: var(--orb-core);
+  --color-orb-glow: var(--orb-glow);
+  --color-orb-pulse: var(--orb-pulse);
+
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground-muted);
+}
+
+/* Selection colors */
+::selection {
+  background: var(--primary);
+  color: var(--foreground);
+}
+
+/* Focus ring utility */
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 20px var(--primary-glow), 0 0 40px var(--primary-glow);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+}
+
+/* Animated gradient background */
+.bg-gradient-animated {
+  background: linear-gradient(
+    135deg,
+    var(--background) 0%,
+    var(--background-surface) 50%,
+    var(--background) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Pulse animation for orb */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--orb-glow), 0 0 40px var(--orb-glow), 0 0 60px var(--orb-pulse);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--orb-glow), 0 0 60px var(--orb-glow), 0 0 90px var(--orb-pulse);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Orbit animation */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
+}
+
+.animate-orbit {
+  animation: orbit var(--orbit-duration, 20s) linear infinite;
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}

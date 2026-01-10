@@ -1,0 +1,210 @@
+import { Agent } from '@/types/agent';
+
+export const agents: Agent[] = [
+  {
+    id: 'jenkins-test',
+    name: 'Jenkins Test Automation',
+    shortName: 'Jenkins',
+    description: 'Generate automated Jenkins-compatible tests based on business objects and datasets',
+    icon: 'FlaskConical',
+    category: 'testing',
+    webhookUrl: '/webhook/agent-jenkins-test',
+    outputType: 'code',
+    inputs: [
+      {
+        name: 'businessObjectApi',
+        label: 'Business Object API Name',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., SalesOrder, InvWhControl',
+        description: 'The API name of the business object to test',
+      },
+      {
+        name: 'companyName',
+        label: 'Company Name',
+        type: 'select',
+        required: true,
+        placeholder: 'Select company',
+        description: 'Used to determine the dataset for testing',
+        options: [
+          { value: 'company-a', label: 'Company A' },
+          { value: 'company-b', label: 'Company B' },
+          { value: 'company-c', label: 'Company C' },
+        ],
+      },
+      {
+        name: 'instructions',
+        label: 'Additional Instructions',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Edge cases, assumptions, exclusions...',
+        description: 'Free-text instructions for test generation',
+        rows: 4,
+      },
+    ],
+  },
+  {
+    id: 'functional-test',
+    name: 'Functional Test Case Agent',
+    shortName: 'Functional',
+    description: 'Generate functional test cases using development event notes',
+    icon: 'ClipboardCheck',
+    category: 'testing',
+    webhookUrl: '/webhook/agent-functional-test',
+    outputType: 'markdown',
+    inputs: [
+      {
+        name: 'programNames',
+        label: 'Program Name(s)',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., SORTOI, INVMQI (comma-separated)',
+        description: 'One or more program names to generate tests for',
+      },
+      {
+        name: 'eventNumber',
+        label: 'Event Number',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., EVT-12345',
+        description: 'Used to retrieve development notes',
+      },
+      {
+        name: 'guidance',
+        label: 'Additional Guidance',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Specific scenarios, focus areas...',
+        description: 'Additional guidance for test case generation',
+        rows: 4,
+      },
+    ],
+  },
+  {
+    id: 'code-review',
+    name: 'Code Reviewer Agent',
+    shortName: 'Review',
+    description: 'Perform intelligent static and contextual code review',
+    icon: 'SearchCode',
+    category: 'review',
+    webhookUrl: '/webhook/agent-code-review',
+    outputType: 'mixed',
+    inputs: [
+      {
+        name: 'programName',
+        label: 'Program Name',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., SalesOrder.cs',
+        description: 'The program or file to review',
+      },
+      {
+        name: 'developerNotes',
+        label: 'Developer Notes',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Known concerns, standards to enforce, context...',
+        description: 'Provide context for the review',
+        rows: 5,
+      },
+    ],
+  },
+  {
+    id: 'technical-docs',
+    name: 'Technical Authoring Agent',
+    shortName: 'Docs',
+    description: 'Produce or refine technical documentation from mixed inputs',
+    icon: 'FileText',
+    category: 'documentation',
+    webhookUrl: '/webhook/agent-technical-docs',
+    outputType: 'markdown',
+    inputs: [
+      {
+        name: 'programName',
+        label: 'Program Name',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., SORTOI',
+        description: 'The program to document',
+      },
+      {
+        name: 'businessSpec',
+        label: 'Business Specification',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Paste business specification text here...',
+        description: 'Business specification content',
+        rows: 4,
+      },
+      {
+        name: 'technicalSpecFile',
+        label: 'Technical Specification (File)',
+        type: 'file',
+        required: false,
+        description: 'Upload technical specification document',
+        accept: '.pdf,.doc,.docx,.txt,.md',
+      },
+      {
+        name: 'eventNumber',
+        label: 'Event Number',
+        type: 'text',
+        required: false,
+        placeholder: 'e.g., EVT-12345',
+        description: 'For retrieving developer notes',
+      },
+      {
+        name: 'instructions',
+        label: 'Additional Instructions',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Specific sections to focus on, style preferences...',
+        description: 'Additional authoring instructions',
+        rows: 3,
+      },
+    ],
+  },
+  {
+    id: 'bug-analysis',
+    name: 'Bug Analysis Agent',
+    shortName: 'Bug',
+    description: 'Analyse bugs using historical support and development context',
+    icon: 'Bug',
+    category: 'analysis',
+    webhookUrl: '/webhook/agent-bug-analysis',
+    outputType: 'mixed',
+    inputs: [
+      {
+        name: 'eventNumber',
+        label: 'Event Number',
+        type: 'text',
+        required: true,
+        placeholder: 'e.g., SUP-98765',
+        description: 'Support/service event number',
+      },
+      {
+        name: 'context',
+        label: 'Additional Context',
+        type: 'textarea',
+        required: false,
+        placeholder: 'Reproduction steps, hints, related issues...',
+        description: 'Additional context or reproduction hints',
+        rows: 5,
+      },
+    ],
+  },
+];
+
+export const getAgentById = (id: string): Agent | undefined => {
+  return agents.find((agent) => agent.id === id);
+};
+
+export const getAgentsByCategory = (category: Agent['category']): Agent[] => {
+  return agents.filter((agent) => agent.category === category);
+};
+
+export const agentCategories: { id: Agent['category']; label: string; color: string }[] = [
+  { id: 'testing', label: 'Testing', color: '#10B981' },
+  { id: 'review', label: 'Review', color: '#0090B5' },
+  { id: 'documentation', label: 'Documentation', color: '#F59E0B' },
+  { id: 'analysis', label: 'Analysis', color: '#A855F7' },
+];
