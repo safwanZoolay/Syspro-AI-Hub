@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getIcon, Sparkles, X, Command, ArrowRight } from '@/lib/icons';
 import { Agent } from '@/types/agent';
 import { useAppStore } from '@/store/app-store';
-import { agentCategories } from '@/config/agents';
+import { categories, getCategoryById } from '@/config/agents';
 
 interface CommandInputProps {
   agents: Agent[];
@@ -16,7 +16,7 @@ interface CommandInputProps {
 export function CommandInput({
   agents,
   onAgentSelect,
-  placeholder = 'Ask me anything or select an agent...',
+  placeholder = 'Search agents...',
 }: CommandInputProps) {
   const { commandInput, setCommandInput } = useAppStore();
   const [isFocused, setIsFocused] = useState(false);
@@ -32,9 +32,9 @@ export function CommandInput({
           agent.name.toLowerCase().includes(query) ||
           agent.shortName.toLowerCase().includes(query) ||
           agent.description.toLowerCase().includes(query) ||
-          agent.category.toLowerCase().includes(query)
+          agent.categoryId.toLowerCase().includes(query)
       );
-      setSuggestions(filtered);
+      setSuggestions(filtered.slice(0, 8)); // Limit to 8 suggestions
     } else {
       setSuggestions([]);
     }
@@ -50,6 +50,11 @@ export function CommandInput({
       setCommandInput('');
       setIsFocused(false);
     }
+  };
+
+  const getAgentCategoryColor = (agent: Agent) => {
+    const category = getCategoryById(agent.categoryId);
+    return category?.color || '#0090B5';
   };
 
   return (
@@ -112,14 +117,15 @@ export function CommandInput({
       <AnimatePresence>
         {isFocused && suggestions.length > 0 && (
           <motion.div
-            className="absolute bottom-full left-0 right-0 mb-2 bg-background-surface border border-border rounded-xl shadow-xl overflow-hidden z-50"
+            className="absolute bottom-full left-0 right-0 mb-2 bg-background-surface border border-border rounded-xl shadow-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
             {suggestions.map((agent, index) => {
               const IconComponent = getIcon(agent.icon);
-              const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
+              const categoryColor = getAgentCategoryColor(agent);
+              const category = getCategoryById(agent.categoryId);
 
               return (
                 <motion.button
@@ -127,14 +133,14 @@ export function CommandInput({
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-background-elevated transition-colors text-left"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: index * 0.03 }}
                   onClick={() => {
                     onAgentSelect(agent);
                     setCommandInput('');
                   }}
                 >
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{
                       background: `${categoryColor}20`,
                       border: `1px solid ${categoryColor}40`,
@@ -142,11 +148,11 @@ export function CommandInput({
                   >
                     <IconComponent size={20} style={{ color: categoryColor }} />
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">{agent.name}</p>
-                    <p className="text-xs text-foreground-muted">{agent.description}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{agent.name}</p>
+                    <p className="text-xs text-foreground-muted truncate">{category?.shortName}</p>
                   </div>
-                  <ArrowRight size={16} className="text-foreground-muted" />
+                  <ArrowRight size={16} className="text-foreground-muted flex-shrink-0" />
                 </motion.button>
               );
             })}
@@ -154,7 +160,7 @@ export function CommandInput({
         )}
       </AnimatePresence>
 
-      {/* Quick tips */}
+      {/* Quick tips - show categories */}
       <AnimatePresence>
         {isFocused && !commandInput && (
           <motion.div
@@ -163,27 +169,24 @@ export function CommandInput({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
-            <p className="text-xs text-foreground-muted mb-3">Quick actions</p>
+            <p className="text-xs text-foreground-muted mb-3">Categories ({agents.length} agents)</p>
             <div className="flex flex-wrap gap-2">
-              {agents.slice(0, 3).map((agent) => {
-                const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
-                return (
-                  <button
-                    key={agent.id}
-                    onClick={() => {
-                      onAgentSelect(agent);
-                      setCommandInput('');
-                    }}
-                    className="px-3 py-1.5 rounded-lg text-sm transition-colors"
-                    style={{
-                      background: `${categoryColor}15`,
-                      color: categoryColor,
-                    }}
-                  >
-                    {agent.shortName}
-                  </button>
-                );
-              })}
+              {categories.slice(0, 5).map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setCommandInput(cat.shortName);
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-sm transition-all hover:scale-105"
+                  style={{
+                    background: `${cat.color}15`,
+                    color: cat.color,
+                    border: `1px solid ${cat.color}30`,
+                  }}
+                >
+                  {cat.shortName}
+                </button>
+              ))}
             </div>
           </motion.div>
         )}

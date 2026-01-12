@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Agent, ExecutionRun, AppState } from '@/types/agent';
+import { Agent, ExecutionRun, AppState, AgentCategoryId } from '@/types/agent';
 
 export const useAppStore = create<AppState>((set) => ({
   // Authentication
@@ -48,4 +48,8 @@ export const useAppStore = create<AppState>((set) => ({
   setIsOrbHovered: (hovered) => set({ isOrbHovered: hovered }),
   hoveredAgentId: null,
   setHoveredAgentId: (id) => set({ hoveredAgentId: id }),
+
+  // Category hover state for expanding agents
+  expandedCategoryId: null,
+  setExpandedCategoryId: (id: AgentCategoryId | null) => set({ expandedCategoryId: id }),
 }));

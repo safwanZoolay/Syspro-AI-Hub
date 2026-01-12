@@ -6,11 +6,18 @@ export type InputFieldType =
   | 'file'
   | 'number';
 
-export type AgentCategory =
+// Updated category types for the 10 main categories
+export type AgentCategoryId =
+  | 'code-quality'
   | 'testing'
-  | 'review'
   | 'documentation'
-  | 'analysis';
+  | 'dev-productivity'
+  | 'devops'
+  | 'requirements'
+  | 'event-management'
+  | 'syspro-specific'
+  | 'team-process'
+  | 'customer-support';
 
 export type OutputType =
   | 'markdown'
@@ -36,6 +43,17 @@ export interface InputField {
   options?: { value: string; label: string }[];
   accept?: string; // For file inputs
   rows?: number; // For textarea
+  defaultValue?: string; // Default value for the field
+}
+
+// Category definition for the orbital nodes
+export interface Category {
+  id: AgentCategoryId;
+  name: string;
+  shortName: string;
+  description: string;
+  icon: string; // Lucide icon name
+  color: string; // Category accent color
 }
 
 export interface Agent {
@@ -44,11 +62,10 @@ export interface Agent {
   shortName: string;
   description: string;
   icon: string; // Lucide icon name
-  category: AgentCategory;
+  categoryId: AgentCategoryId;
   inputs: InputField[];
   webhookUrl: string;
   outputType: OutputType;
-  color?: string; // Optional custom accent color
 }
 
 export interface ExecutionRun {
@@ -109,4 +126,8 @@ export interface AppState {
   setIsOrbHovered: (hovered: boolean) => void;
   hoveredAgentId: string | null;
   setHoveredAgentId: (id: string | null) => void;
+
+  // Category hover state for expanding agents
+  expandedCategoryId: AgentCategoryId | null;
+  setExpandedCategoryId: (id: AgentCategoryId | null) => void;
 }

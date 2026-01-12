@@ -1,5 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 import {
+  // Existing
   FlaskConical,
   ClipboardCheck,
   SearchCode,
@@ -28,10 +29,67 @@ import {
   Sparkles,
   X,
   Command,
+  // Category icons
+  ShieldCheck,
+  Rocket,
+  Target,
+  Ticket,
+  Database,
+  Users,
+  Headphones,
+  // Agent icons - Code Quality
+  FileCode2,
+  Trash2,
+  Shield,
+  GitBranch,
+  // Agent icons - Testing
+  MonitorPlay,
+  ListChecks,
+  Table,
+  PieChart,
+  // Agent icons - Documentation
+  MessageSquareCode,
+  BookOpen,
+  History,
+  Lightbulb,
+  ClipboardList,
+  // Agent icons - Dev Productivity
+  Package,
+  FileJson,
+  Settings,
+  Wand2,
+  // Agent icons - DevOps
+  CheckSquare,
+  GitCompare,
+  Workflow,
+  Undo2,
+  AlertTriangle,
+  // Agent icons - Requirements
+  FileSearch,
+  Link,
+  // Agent icons - Event Management
+  Network,
+  ArrowRightLeft,
+  ArrowUp,
+  // Agent icons - SYSPRO Specific
+  Compass,
+  FormInput,
+  ArrowUpCircle,
+  // Agent icons - Team & Process
+  BarChart,
+  UserPlus,
+  FileEdit,
+  UserCheck,
+  // Agent icons - Customer Support
+  Mail,
+  GraduationCap,
+  HelpCircle,
+  Presentation,
 } from 'lucide-react';
 
 // Map of icon names to their components
 const iconMap: Record<string, LucideIcon> = {
+  // Existing
   FlaskConical,
   ClipboardCheck,
   SearchCode,
@@ -60,6 +118,63 @@ const iconMap: Record<string, LucideIcon> = {
   Sparkles,
   X,
   Command,
+  // Category icons
+  ShieldCheck,
+  Rocket,
+  Target,
+  Ticket,
+  Database,
+  Users,
+  Headphones,
+  HeadphonesIcon: Headphones,
+  // Agent icons - Code Quality
+  FileCode2,
+  Trash2,
+  Shield,
+  GitBranch,
+  // Agent icons - Testing
+  MonitorPlay,
+  ListChecks,
+  Table,
+  PieChart,
+  // Agent icons - Documentation
+  MessageSquareCode,
+  BookOpen,
+  History,
+  Lightbulb,
+  ClipboardList,
+  // Agent icons - Dev Productivity
+  Package,
+  FileJson,
+  Settings,
+  Wand2,
+  // Agent icons - DevOps
+  CheckSquare,
+  GitCompare,
+  Workflow,
+  Undo2,
+  AlertTriangle,
+  // Agent icons - Requirements
+  FileSearch,
+  Link,
+  // Agent icons - Event Management
+  Network,
+  ArrowRightLeft,
+  ArrowUp,
+  // Agent icons - SYSPRO Specific
+  Compass,
+  FormInput,
+  ArrowUpCircle,
+  // Agent icons - Team & Process
+  BarChart,
+  UserPlus,
+  FileEdit,
+  UserCheck,
+  // Agent icons - Customer Support
+  Mail,
+  GraduationCap,
+  HelpCircle,
+  Presentation,
 };
 
 export function getIcon(name: string): LucideIcon {
@@ -67,6 +182,7 @@ export function getIcon(name: string): LucideIcon {
 }
 
 export {
+  // Existing
   FlaskConical,
   ClipboardCheck,
   SearchCode,
@@ -95,4 +211,60 @@ export {
   Sparkles,
   X,
   Command,
+  // Category icons
+  ShieldCheck,
+  Rocket,
+  Target,
+  Ticket,
+  Database,
+  Users,
+  Headphones,
+  // Agent icons - Code Quality
+  FileCode2,
+  Trash2,
+  Shield,
+  GitBranch,
+  // Agent icons - Testing
+  MonitorPlay,
+  ListChecks,
+  Table,
+  PieChart,
+  // Agent icons - Documentation
+  MessageSquareCode,
+  BookOpen,
+  History,
+  Lightbulb,
+  ClipboardList,
+  // Agent icons - Dev Productivity
+  Package,
+  FileJson,
+  Settings,
+  Wand2,
+  // Agent icons - DevOps
+  CheckSquare,
+  GitCompare,
+  Workflow,
+  Undo2,
+  AlertTriangle,
+  // Agent icons - Requirements
+  FileSearch,
+  Link,
+  // Agent icons - Event Management
+  Network,
+  ArrowRightLeft,
+  ArrowUp,
+  // Agent icons - SYSPRO Specific
+  Compass,
+  FormInput,
+  ArrowUpCircle,
+  // Agent icons - Team & Process
+  BarChart,
+  UserPlus,
+  FileEdit,
+  UserCheck,
+  // Agent icons - Customer Support
+  Mail,
+  GraduationCap,
+  HelpCircle,
+  Presentation,
 };
