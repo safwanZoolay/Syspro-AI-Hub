@@ -242,12 +242,12 @@ export const agents: Agent[] = [
     description: 'Generates automated Jenkins test scripts using e.Net Business Object APIs based on program functionality.',
     icon: 'FlaskConical',
     categoryId: 'testing',
-    webhookUrl: '/webhook/agent-jenkins-test',
+    webhookUrl: '/webhook/jenkins-test-agent',
     outputType: 'code',
     inputs: [
       { name: 'programName', label: 'Program Name', type: 'text', required: true, placeholder: 'e.g., SORTOI' },
-      { name: 'company', label: 'Company', type: 'text', required: true, placeholder: 'e.g., POS1' },
-      { name: 'additionalContext', label: 'Additional Context', type: 'textarea', required: false, rows: 4, placeholder: 'Any additional context or requirements for the test...' },
+      { name: 'companyId', label: 'Company', type: 'text', required: true, placeholder: 'e.g., POS1' },
+      { name: 'additionalInstructions', label: 'Additional Context', type: 'textarea', required: false, rows: 4, placeholder: 'Any additional context or requirements for the test...' },
     ],
   },
   {

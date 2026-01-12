@@ -26,6 +26,8 @@ export interface AgentExecutionResponse {
 export interface WebhookPayload {
   agentId: string;
   inputs: Record<string, unknown>;
+  jobId: string;
+  callbackUrl: string;
   metadata: {
     userId?: string;
     sessionId?: string;
@@ -49,6 +51,13 @@ const generateExecutionId = (): string => {
   return `exec_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 };
 
+// Get the app's base URL for callbacks
+const getAppBaseUrl = (): string => {
+  return process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+};
+
 /**
  * Execute an agent by calling its n8n webhook
  */
@@ -63,9 +72,12 @@ export async function executeAgent(
     const webhookUrl = `${baseUrl}${request.webhookUrl}`;
 
     // Prepare the payload for n8n
+    const appBaseUrl = getAppBaseUrl();
     const payload: WebhookPayload = {
       agentId: request.agentId,
       inputs: request.inputs,
+      jobId: executionId,
+      callbackUrl: `${appBaseUrl}/api/agent-callback`,
       metadata: {
         ...request.metadata,
         timestamp: new Date().toISOString(),
