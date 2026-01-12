@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { getIcon } from '@/lib/icons';
 import { Agent } from '@/types/agent';
 import { useAppStore } from '@/store/app-store';
-import { agentCategories } from '@/config/agents';
+import { categories } from '@/config/agents';
 
 interface OrbitalAgentProps {
   agent: Agent;
@@ -22,7 +22,7 @@ export function OrbitalAgent({ agent, position, index, onClick }: OrbitalAgentPr
   const IconComponent = getIcon(agent.icon);
 
   // Get category color
-  const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
+  const categoryColor = categories.find((c) => c.id === agent.categoryId)?.color || '#0090B5';
 
   return (
     <motion.div
@@ -156,7 +156,7 @@ export function OrbitalAgent({ agent, position, index, onClick }: OrbitalAgentPr
                 color: categoryColor,
               }}
             >
-              {agent.category}
+              {agent.categoryId}
             </span>
           </div>
         </motion.div>

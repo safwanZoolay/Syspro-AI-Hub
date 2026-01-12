@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { getIcon, ArrowLeft, Upload, Loader2, Zap } from '@/lib/icons';
 import { Agent, InputField } from '@/types/agent';
-import { agentCategories } from '@/config/agents';
+import { categories } from '@/config/agents';
 
 interface DynamicFormProps {
   agent: Agent;
@@ -18,7 +18,7 @@ export function DynamicForm({ agent, onSubmit, onBack, isSubmitting }: DynamicFo
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const IconComponent = getIcon(agent.icon);
-  const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
+  const categoryColor = categories.find((c) => c.id === agent.categoryId)?.color || '#0090B5';
 
   const handleChange = (name: string, value: unknown) => {
     setFormData((prev) => ({ ...prev, [name]: value }));

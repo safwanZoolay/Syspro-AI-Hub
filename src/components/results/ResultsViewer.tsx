@@ -18,7 +18,7 @@ import {
 } from '@/lib/icons';
 import ReactMarkdown from 'react-markdown';
 import { ExecutionResult, Agent } from '@/types/agent';
-import { agentCategories } from '@/config/agents';
+import { categories } from '@/config/agents';
 import { LucideIcon } from 'lucide-react';
 
 interface ResultsViewerProps {
@@ -35,7 +35,7 @@ export function ResultsViewer({ result, agent, onNewExecution, onBack }: Results
   const [copiedContent, setCopiedContent] = useState(false);
 
   const AgentIcon = getIcon(agent.icon);
-  const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
+  const categoryColor = categories.find((c) => c.id === agent.categoryId)?.color || '#0090B5';
 
   const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
     { id: 'summary', label: 'Summary', icon: FileText },
