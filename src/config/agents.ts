@@ -246,9 +246,8 @@ export const agents: Agent[] = [
     outputType: 'code',
     inputs: [
       { name: 'programName', label: 'Program Name', type: 'text', required: true, placeholder: 'e.g., SORTOI' },
-      { name: 'credentials', label: 'e.Net Login Credentials', type: 'text', required: true },
-      { name: 'eventNumber', label: 'Event Number', type: 'text', required: true, placeholder: 'e.g., EVT-12345' },
-      { name: 'instructions', label: 'Additional Context/Instructions', type: 'textarea', required: false, rows: 4 },
+      { name: 'company', label: 'Company', type: 'text', required: true, placeholder: 'e.g., POS1' },
+      { name: 'additionalContext', label: 'Additional Context', type: 'textarea', required: false, rows: 4, placeholder: 'Any additional context or requirements for the test...' },
     ],
   },
   {
