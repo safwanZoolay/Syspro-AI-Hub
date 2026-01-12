@@ -13,7 +13,7 @@ import {
   Terminal
 } from '@/lib/icons';
 import { ExecutionRun, ExecutionStatus, Agent } from '@/types/agent';
-import { agentCategories } from '@/config/agents';
+import { categories } from '@/config/agents';
 import { LucideIcon } from 'lucide-react';
 
 interface ExecutionMonitorProps {
@@ -35,7 +35,7 @@ export function ExecutionMonitor({ execution, agent, onCancel }: ExecutionMonito
   const status = statusConfig[execution.status];
   const StatusIcon = status.icon;
   const AgentIcon = getIcon(agent.icon);
-  const categoryColor = agentCategories.find((c) => c.id === agent.category)?.color || '#0090B5';
+  const categoryColor = categories.find((c) => c.id === agent.categoryId)?.color || '#0090B5';
 
   const isActive = execution.status === 'running' || execution.status === 'processing';
   const progress = execution.progress || 0;
