@@ -67,7 +67,7 @@ export const categories: Category[] = [
     shortName: 'SYSPRO',
     description: 'Business objects, transaction flows, and setup advisors',
     icon: 'Database',
-    color: '#002eca',
+    color: '#3B82F6',
   },
   {
     id: 'team-process',

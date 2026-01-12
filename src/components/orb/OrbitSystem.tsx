@@ -58,6 +58,32 @@ export function OrbitSystem({
 
   return (
     <div className="relative flex items-center justify-center" style={{ width: 650, height: 650 }}>
+      {/* Back button - positioned outside orbit in top-left */}
+      <AnimatePresence>
+        {selectedCategory && (
+          <motion.button
+            className="absolute top-0 left-0 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+            style={{
+              background: `${selectedCategory.color}15`,
+              border: `1px solid ${selectedCategory.color}30`,
+              color: selectedCategory.color,
+            }}
+            onClick={handleBackToCategories}
+            whileHover={{
+              scale: 1.05,
+              background: `${selectedCategory.color}25`,
+            }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ArrowLeft size={14} />
+            Back
+          </motion.button>
+        )}
+      </AnimatePresence>
       {/* Outer decorative ring */}
       <motion.div
         className="absolute rounded-full border border-border/20"
@@ -158,55 +184,138 @@ export function OrbitSystem({
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4, type: 'spring' }}
           >
-            {/* Back button */}
-            <motion.button
-              className="absolute -top-20 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all"
-              style={{
-                background: `${selectedCategory.color}15`,
-                border: `1px solid ${selectedCategory.color}40`,
-                color: selectedCategory.color,
-              }}
-              onClick={handleBackToCategories}
-              whileHover={{
-                scale: 1.05,
-                background: `${selectedCategory.color}25`,
-              }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <ArrowLeft size={16} />
-              Back to Categories
-            </motion.button>
+            {/* Category center node with alive glow effect */}
+            <motion.div className="relative w-32 h-32 flex items-center justify-center">
+              {/* Outer pulsing ring 1 */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  border: `2px solid ${selectedCategory.color}`,
+                }}
+                animate={{
+                  scale: [1, 1.8, 1.8],
+                  opacity: [0.6, 0, 0],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeOut',
+                }}
+              />
 
-            {/* Category center node */}
-            <motion.div
-              className="relative w-32 h-32 rounded-full flex items-center justify-center cursor-pointer"
-              style={{
-                background: `radial-gradient(circle, ${selectedCategory.color}30 0%, ${selectedCategory.color}10 50%, transparent 70%)`,
-                border: `3px solid ${selectedCategory.color}`,
-                boxShadow: `0 0 40px ${selectedCategory.color}40, 0 0 80px ${selectedCategory.color}20, inset 0 0 40px ${selectedCategory.color}20`,
-              }}
-              animate={{
-                boxShadow: [
-                  `0 0 40px ${selectedCategory.color}40, 0 0 80px ${selectedCategory.color}20, inset 0 0 40px ${selectedCategory.color}20`,
-                  `0 0 60px ${selectedCategory.color}50, 0 0 100px ${selectedCategory.color}30, inset 0 0 50px ${selectedCategory.color}30`,
-                  `0 0 40px ${selectedCategory.color}40, 0 0 80px ${selectedCategory.color}20, inset 0 0 40px ${selectedCategory.color}20`,
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              {(() => {
-                const CategoryIcon = getIcon(selectedCategory.icon);
-                return (
-                  <CategoryIcon
-                    size={48}
-                    style={{ color: selectedCategory.color }}
-                    className="drop-shadow-lg"
+              {/* Outer pulsing ring 2 (delayed) */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  border: `2px solid ${selectedCategory.color}`,
+                }}
+                animate={{
+                  scale: [1, 1.6, 1.6],
+                  opacity: [0.5, 0, 0],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeOut',
+                  delay: 0.8,
+                }}
+              />
+
+              {/* Outer pulsing ring 3 (more delayed) */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  border: `1px solid ${selectedCategory.color}`,
+                }}
+                animate={{
+                  scale: [1, 2, 2],
+                  opacity: [0.4, 0, 0],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeOut',
+                  delay: 1.6,
+                }}
+              />
+
+              {/* Rotating glow particles */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              >
+                {[0, 60, 120, 180, 240, 300].map((angle) => (
+                  <motion.div
+                    key={angle}
+                    className="absolute w-2 h-2 rounded-full"
+                    style={{
+                      background: selectedCategory.color,
+                      left: '50%',
+                      top: '50%',
+                      transform: `rotate(${angle}deg) translateX(75px) translate(-50%, -50%)`,
+                      boxShadow: `0 0 10px ${selectedCategory.color}, 0 0 20px ${selectedCategory.color}`,
+                    }}
+                    animate={{
+                      opacity: [0.3, 1, 0.3],
+                      scale: [0.8, 1.2, 0.8],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: angle / 360,
+                    }}
                   />
-                );
-              })()}
+                ))}
+              </motion.div>
+
+              {/* Inner glow layer */}
+              <motion.div
+                className="absolute inset-2 rounded-full"
+                style={{
+                  background: `radial-gradient(circle, ${selectedCategory.color}40 0%, transparent 70%)`,
+                }}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+
+              {/* Main orb */}
+              <motion.div
+                className="relative w-28 h-28 rounded-full flex items-center justify-center"
+                style={{
+                  background: `radial-gradient(circle at 30% 30%, ${selectedCategory.color}50 0%, ${selectedCategory.color}20 40%, ${selectedCategory.color}10 70%, transparent 100%)`,
+                  border: `3px solid ${selectedCategory.color}`,
+                  boxShadow: `0 0 30px ${selectedCategory.color}60, 0 0 60px ${selectedCategory.color}30, inset 0 0 30px ${selectedCategory.color}30`,
+                }}
+                animate={{
+                  boxShadow: [
+                    `0 0 30px ${selectedCategory.color}60, 0 0 60px ${selectedCategory.color}30, inset 0 0 30px ${selectedCategory.color}30`,
+                    `0 0 50px ${selectedCategory.color}80, 0 0 80px ${selectedCategory.color}40, inset 0 0 40px ${selectedCategory.color}40`,
+                    `0 0 30px ${selectedCategory.color}60, 0 0 60px ${selectedCategory.color}30, inset 0 0 30px ${selectedCategory.color}30`,
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                {(() => {
+                  const CategoryIcon = getIcon(selectedCategory.icon);
+                  return (
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <CategoryIcon
+                        size={44}
+                        style={{ color: selectedCategory.color, filter: `drop-shadow(0 0 8px ${selectedCategory.color})` }}
+                      />
+                    </motion.div>
+                  );
+                })()}
+              </motion.div>
             </motion.div>
 
             {/* Category name */}
@@ -218,7 +327,7 @@ export function OrbitSystem({
             >
               <h2
                 className="text-xl font-bold"
-                style={{ color: selectedCategory.color }}
+                style={{ color: selectedCategory.color, textShadow: `0 0 20px ${selectedCategory.color}50` }}
               >
                 {selectedCategory.name}
               </h2>
@@ -418,14 +527,15 @@ export function OrbitSystem({
                     {agent.shortName}
                   </motion.span>
 
-                  {/* Expanded tooltip on hover */}
+                  {/* Expanded tooltip on hover - positioned above */}
                   <motion.div
-                    className="absolute top-full mt-6 px-4 py-3 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50"
+                    className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 px-4 py-3 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50"
                     style={{
                       background: 'rgba(10, 15, 25, 0.95)',
                       border: `1px solid ${selectedCategory.color}40`,
                       boxShadow: `0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px ${selectedCategory.color}15`,
-                      minWidth: 220,
+                      minWidth: 200,
+                      maxWidth: 260,
                     }}
                   >
                     <p className="text-sm font-semibold text-foreground mb-1">{agent.name}</p>
