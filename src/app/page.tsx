@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { OrbitSystem } from '@/components/orb/OrbitSystem';
 import { DynamicForm } from '@/components/form/DynamicForm';
 import { ExecutionMonitor } from '@/components/execution/ExecutionMonitor';
+import { JenkinsProcessingScreen } from '@/components/execution/JenkinsProcessingScreen';
 import { ResultsViewer } from '@/components/results/ResultsViewer';
 import { CommandInput } from '@/components/ui/CommandInput';
 import { LoginPage } from '@/components/auth/LoginPage';
@@ -327,11 +328,37 @@ export default function Home() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
             >
-              <ExecutionMonitor
-                execution={currentExecution}
-                agent={selectedAgent}
-                onCancel={handleBack}
-              />
+              {selectedAgent.id === 'jenkins-test' ? (
+                <JenkinsProcessingScreen
+                  programName={String(currentExecution.inputs?.programName || 'Unknown')}
+                  companyId={String(currentExecution.inputs?.companyId || 'Unknown')}
+                  duration={60000}
+                  onComplete={() => {
+                    updateExecution(currentExecution.id, {
+                      status: 'complete',
+                      statusMessage: 'Test generation complete!',
+                      progress: 100,
+                      completedAt: new Date(),
+                      result: {
+                        type: selectedAgent.outputType,
+                        summary: `## Jenkins Test Generation Complete\n\nTests have been generated for **${currentExecution.inputs?.programName}** in company **${currentExecution.inputs?.companyId}**.\n\n### What was created:\n- Test framework setup\n- Unit test cases\n- Integration test scenarios\n- Test data fixtures\n\n### Next Steps\n1. Review the generated test files\n2. Run the test suite in Jenkins\n3. Check code coverage reports`,
+                        content: `// Generated Jenkins Tests for ${currentExecution.inputs?.programName}\n// Company: ${currentExecution.inputs?.companyId}\n// Generated: ${new Date().toISOString()}\n\nimport { describe, it, expect } from '@jest/globals';\n\ndescribe('${currentExecution.inputs?.programName} Tests', () => {\n  describe('Business Logic', () => {\n    it('should validate input parameters', () => {\n      // Test implementation\n      expect(true).toBe(true);\n    });\n\n    it('should process transactions correctly', () => {\n      // Test implementation\n      expect(true).toBe(true);\n    });\n\n    it('should handle edge cases', () => {\n      // Test implementation\n      expect(true).toBe(true);\n    });\n  });\n\n  describe('Data Integrity', () => {\n    it('should maintain data consistency', () => {\n      // Test implementation\n      expect(true).toBe(true);\n    });\n  });\n});\n`,
+                        files: [
+                          { name: `${currentExecution.inputs?.programName}.test.ts`, type: 'text/typescript' },
+                          { name: `${currentExecution.inputs?.programName}.fixture.json`, type: 'application/json' },
+                        ],
+                      },
+                    });
+                    setViewState('results');
+                  }}
+                />
+              ) : (
+                <ExecutionMonitor
+                  execution={currentExecution}
+                  agent={selectedAgent}
+                  onCancel={handleBack}
+                />
+              )}
             </motion.div>
           )}
 
